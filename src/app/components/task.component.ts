@@ -61,6 +61,7 @@ export default class TaskComponent {
   onArchiveTask = new EventEmitter<Event>();
 
   /**
+   * @ignore
    * Component method to trigger the onPin event
    * @param id string
    */
@@ -68,6 +69,7 @@ export default class TaskComponent {
     this.onPinTask.emit(id);
   }
   /**
+   * @ignore
    * Component method to trigger the onArchive event
    * @param id string
    */
