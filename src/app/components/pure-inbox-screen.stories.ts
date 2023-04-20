@@ -21,10 +21,10 @@ const meta: Meta<PureInboxScreenComponent> = {
   decorators: [
     moduleMetadata({
       imports: [CommonModule, TaskModule],
-      providers: [Store],
+      // providers: [Store],
     }),
     applicationConfig({
-      providers: [importProvidersFrom(NgxsModule.forRoot([TasksState]))],
+      providers: [Store, importProvidersFrom(NgxsModule.forRoot([TasksState]))],
     }),
   ],
 };
