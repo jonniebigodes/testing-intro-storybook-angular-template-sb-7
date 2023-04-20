@@ -1,21 +1,31 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
-import { moduleMetadata } from '@storybook/angular';
+import { importProvidersFrom } from '@angular/core';
+
+import { moduleMetadata, applicationConfig } from '@storybook/angular';
 
 import { CommonModule } from '@angular/common';
 
 import PureInboxScreenComponent from './pure-inbox-screen.component';
 
+import { Store, NgxsModule } from '@ngxs/store';
+import { TasksState } from '../state/task.state';
 import { TaskModule } from './task.module';
 
 const meta: Meta<PureInboxScreenComponent> = {
   component: PureInboxScreenComponent,
   title: 'PureInboxScreen',
-  tags: ['autodocs'],
+  // tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      declarations: [PureInboxScreenComponent],
       imports: [CommonModule, TaskModule],
+      providers: [Store],
+    }),
+    applicationConfig({
+      providers: [
+        TaskModule,
+        importProvidersFrom(NgxsModule.forRoot([TasksState])),
+      ],
     }),
   ],
 };
