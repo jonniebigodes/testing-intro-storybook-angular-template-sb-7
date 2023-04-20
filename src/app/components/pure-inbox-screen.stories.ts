@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
+import { fireEvent, within } from '@storybook/testing-library';
+
 import { importProvidersFrom } from '@angular/core';
 
 import { moduleMetadata, applicationConfig } from '@storybook/angular';
@@ -22,10 +24,7 @@ const meta: Meta<PureInboxScreenComponent> = {
       providers: [Store],
     }),
     applicationConfig({
-      providers: [
-        TaskModule,
-        importProvidersFrom(NgxsModule.forRoot([TasksState])),
-      ],
+      providers: [importProvidersFrom(NgxsModule.forRoot([TasksState]))],
     }),
   ],
 };
@@ -38,5 +37,15 @@ export const Default: Story = {};
 export const Error: Story = {
   args: {
     error: true,
+  },
+};
+
+export const WithInteractions: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // Simulates pinning the first task
+    await fireEvent.click(canvas.getByLabelText('pinTask-1'));
+    // Simulates pinning the third task
+    await fireEvent.click(canvas.getByLabelText('pinTask-3'));
   },
 };
